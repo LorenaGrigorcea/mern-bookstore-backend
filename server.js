@@ -9,9 +9,11 @@ const jwt = require('jsonwebtoken');
 
 const app = express();
 const PORT = 3000;
+const allowedOrigins = ['http://localhost:5173', 'https://mern-bookstore-frontend-nine.vercel.app/'];
 
 app.use(cors({
-  origin: '*',
+  origin: (origin, callback) => allowedOrigins.includes(origin) ?
+  callback(null, true) : callback(new Error('CORS')),
   credential: true
 }));
 app.use(express.json());
